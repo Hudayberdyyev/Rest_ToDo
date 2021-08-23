@@ -4,3 +4,5 @@ docker run --name db -e POSTGRES_PASSWORD='qwerty' -p 5432:5432 -d --rm postgres
 migrate create -ext sql -dir ./schema -seq init
 migrate -path ./schema -database 'postgres://postgres:qwerty@localhost:5432/postgres?sslmode=disable' up
 go get github.com/jmoiron/sqlx
+go mod download github.com/lib/pq
+go get github.com/joho/godotenv
