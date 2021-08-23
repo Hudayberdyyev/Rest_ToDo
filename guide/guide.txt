@@ -2,3 +2,5 @@ go get github.com/gin-gonic/gin
 go get github.com/spf13/viper
 docker run --name db -e POSTGRES_PASSWORD='qwerty' -p 5432:5432 -d --rm postgres
 migrate create -ext sql -dir ./schema -seq init
+migrate -path ./schema -database 'postgres://postgres:qwerty@localhost:5432/postgres?sslmode=disable' up
+go get github.com/jmoiron/sqlx
