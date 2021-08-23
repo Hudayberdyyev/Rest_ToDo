@@ -1,5 +1,7 @@
 package service
 
+import "github.com/Hudayberdyyev/Rest_ToDo/pkg/repository"
+
 type Authorization interface {
 
 }
@@ -18,6 +20,6 @@ type Service struct {
 	TodoItem
 }
 
-func NewService() *Service {
+func NewService(repos *repository.Repository) *Service {
 	return &Service{}
 }
