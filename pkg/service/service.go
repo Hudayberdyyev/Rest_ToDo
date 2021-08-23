@@ -3,15 +3,12 @@ package service
 import "github.com/Hudayberdyyev/Rest_ToDo/pkg/repository"
 
 type Authorization interface {
-
 }
 
 type TodoList interface {
-
 }
 
 type TodoItem interface {
-
 }
 
 type Service struct {
