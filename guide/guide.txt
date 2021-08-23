@@ -6,3 +6,4 @@ migrate -path ./schema -database 'postgres://postgres:qwerty@localhost:5432/post
 go get github.com/jmoiron/sqlx
 go mod download github.com/lib/pq
 go get github.com/joho/godotenv
+github.com/sirupsen/logrus
