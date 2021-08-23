@@ -1,0 +1,4 @@
+go get github.com/gin-gonic/gin
+go get github.com/spf13/viper
+docker run --name db -e POSTGRES_PASSWORD='qwerty' -p 5432:5432 -d --rm postgres
+migrate create -ext sql -dir ./schema -seq init
