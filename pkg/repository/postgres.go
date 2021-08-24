@@ -5,6 +5,10 @@ import (
 	"github.com/jackc/pgx"
 )
 
+const (
+	usersTable = "users"
+)
+
 type Config struct {
 	Host     string
 	Port     uint16
