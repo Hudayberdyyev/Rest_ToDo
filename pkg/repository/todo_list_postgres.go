@@ -4,6 +4,7 @@ import (
 	"fmt"
 	todo "github.com/Hudayberdyyev/Rest_ToDo"
 	"github.com/jackc/pgx"
+	"strings"
 )
 
 type TodoListPostgres struct {
@@ -63,4 +64,37 @@ func (s *TodoListPostgres) GetById(userId, listId int) (todo.TodoList, error) {
 								where ul.user_id=$1 and ul.list_id=$2`, todoListsTable, usersListsTable)
 	err := s.db.QueryRow(query, userId, listId).Scan(&list.Id, &list.Title, &list.Description)
 	return list, err
+}
+
+func (s *TodoListPostgres) Delete(userId, listId int) error {
+	query := fmt.Sprintf("delete from %s tl using %s ul where tl.id = ul.list_id and ul.user_id=$1 and ul.list_id=$2",
+		todoListsTable, usersListsTable)
+	_, err := s.db.Exec(query, userId, listId)
+	return err
+}
+
+func (s *TodoListPostgres) Update(userId, listId int, input todo.UpdateListInput) error {
+	argc := 1
+	argv := make([]interface{}, 0)
+	setValues := make([]string, 0)
+
+	if input.Title != nil {
+		setValues = append(setValues, fmt.Sprintf("title=$%d", argc))
+		argv = append(argv, *input.Title)
+		argc++
+	}
+
+	if input.Description != nil {
+		setValues = append(setValues, fmt.Sprintf("description=$%d", argc))
+		argv = append(argv, *input.Description)
+		argc++
+	}
+
+	setQuery := strings.Join(setValues, ", ")
+	query := fmt.Sprintf("update %s tl set %s from %s ul where tl.id = ul.list_id and ul.list_id=$%d and ul.user_id=$%d",
+		todoListsTable, setQuery, usersListsTable, argc, argc+1)
+	argv = append(argv, listId, userId)
+
+	_, err := s.db.Exec(query, argv...)
+	return err
 }
