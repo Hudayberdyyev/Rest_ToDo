@@ -47,3 +47,9 @@ func (r *TodoListPostgres) GetAllLists(userId int) ([]todo.TodoList, error) {
 	}
 	return lists, nil
 }
+
+func (r *TodoListPostgres) GetListById(userId, listId int) (todo.TodoList, error) {
+	var list todo.TodoList
+	query := fmt.Sprintf("select * from %s where id=$1", todoListsTable)
+	return list, nil
+}
